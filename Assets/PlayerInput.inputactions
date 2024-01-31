@@ -17,7 +17,7 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "Bindable Movement",
                     "id": "12bdc34c-229b-4552-b3bb-bec32996a016",
                     "path": "2DVector",
                     "interactions": "",
@@ -72,7 +72,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Arrow Keys",
                     "id": "77d64226-b802-417c-9a84-f004f5b7e3cc",
                     "path": "2DVector",
                     "interactions": "",

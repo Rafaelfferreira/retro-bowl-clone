@@ -5,15 +5,18 @@ using UnityEngine.InputSystem;
 
 public class QbController : MonoBehaviour
 {
+    // MARK: - Stored game assets
     private Rigidbody2D rb;
-    private PlayerControls playerInput;
+    private PlayerInput playerInput;
 
+    // MARK: - Movement properties
     [SerializeField] private float moveSpeed;
     private Vector2 movementVector = Vector2.zero;
 
+    // MARK: - OBJECT LIFECYCLE
     private void Awake()
     {
-        playerInput = new PlayerControls();
+        playerInput = new PlayerInput();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -39,7 +42,8 @@ public class QbController : MonoBehaviour
         movementVector = Vector2.zero;
     }
 
-    // MARK: - Subscribing to Input Actions life cycle
+    // MARK: - INPUT ACTION LIFE CYCLE
+    #region
     private void OnEnable()
     {
         playerInput.Enable();
@@ -53,4 +57,5 @@ public class QbController : MonoBehaviour
         playerInput.QB.Movement.performed -= OnMovementPerformed;
         playerInput.QB.Movement.canceled -= OnMovementCancelled;
     }
+    #endregion
 }
