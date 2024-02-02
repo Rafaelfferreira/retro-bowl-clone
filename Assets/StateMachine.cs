@@ -5,6 +5,21 @@ using UnityEngine;
 public class StateMachine
 {
     public PlayerState currentState;
+    public Animator anim;
+
+    public StateMachine(PlayerState currentState)
+    {
+        this.currentState = currentState;
+    }
+
+    public StateMachine(Animator anim)
+    {
+        this.anim = anim;
+    }
+
+    public virtual void Awake()
+    {
+    }
 
     public void Initialize(PlayerState _initialState)
     {

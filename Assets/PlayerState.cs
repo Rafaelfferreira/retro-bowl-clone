@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerState
 {
-    private string animBoolName;
+    protected Animator anim;
+    protected string animBoolName;
 
     // MARK: - Initializer
-    public PlayerState(string _animBoolName)
+    public PlayerState(Animator _anim, string _animBoolName)
     {
+        anim = _anim;
         animBoolName = _animBoolName;
     }
 
