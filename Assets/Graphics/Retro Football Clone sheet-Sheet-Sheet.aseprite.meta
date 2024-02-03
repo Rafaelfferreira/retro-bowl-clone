@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7da0c6c0de4ad4ddea1a2c1fc4155e89
+guid: 4a11795ca421b4f1a839c1ec56447117
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638424965830234900
+  platformSettingsDirtyTick: 638425042943587440
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -119,7 +119,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Retro Football Clone sheet
+  - name: Retro Football Clone sheet-Sheet-Sheet
     originalName: 
     pivot: {x: 0.67777777, y: -7}
     alignment: 9
@@ -130,7 +130,7 @@ ScriptedImporter:
       y: 4
       width: 90
       height: 16
-    spriteID: ea043a6d71e3647e5b199bbb62ed4e6e
+    spriteID: a1e7d14124d724a748dadd5a1a00d075
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -138,9 +138,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 1, y: -108}
   spriteSheetImportData:
-  - name: Retro Football Clone sheet_0
+  - name: Retro Football Clone sheet-Sheet-Sheet_0
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -151,7 +151,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: 8d6f6f33a99d14a08aa8413d441585d2
+    spriteID: 18486a92a765049148e4d364aa140769
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,7 +160,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Retro Football Clone sheet_1
+  - name: Retro Football Clone sheet-Sheet-Sheet_1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -171,7 +171,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: ab6ceccd6d9904ec6ba33e2ecead14aa
+    spriteID: 26e604b4cf93f42e6bf60e4df7a7245a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -180,7 +180,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Retro Football Clone sheet_2
+  - name: Retro Football Clone sheet-Sheet-Sheet_2
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -191,7 +191,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: e43689e2438db445ca940b47be8b78fc
+    spriteID: d3d914d63f8954eac99f5f058e7884f0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -200,7 +200,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Retro Football Clone sheet_3
+  - name: Retro Football Clone sheet-Sheet-Sheet_3
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -211,7 +211,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: b249ae17d175646a796c8f51805f0d3a
+    spriteID: f2b6fcbb51f594ed4bcca33f265e64bd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -220,7 +220,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Retro Football Clone sheet_4
+  - name: Retro Football Clone sheet-Sheet-Sheet_4
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -231,7 +231,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: ae406f3c0f326457d811eec13fd264e5
+    spriteID: a4075d5bf2b5b4864b495583c9a376e0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -240,7 +240,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Retro Football Clone sheet_5
+  - name: Retro Football Clone sheet-Sheet-Sheet_5
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -251,7 +251,7 @@ ScriptedImporter:
       y: 4
       width: 16
       height: 16
-    spriteID: 51252db2db0b14edfb8f5881ca93cadf
+    spriteID: f0c8ca0bd0e4641029a299da79557a60
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -262,20 +262,20 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   asepriteLayers:
   - layerIndex: 0
-    guid: -1997979229
-    name: Retro Football Clone sheet
+    guid: -1654069789
+    name: Retro Football Clone sheet-Sheet-Sheet
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Retro Football Clone sheet
+    - name: Retro Football Clone sheet-Sheet-Sheet
       frameIndex: 0
       cellRect:
-        x: 3
-        y: 112
-        width: 90
-        height: 16
-      spriteId: ea043a6d71e3647e5b199bbb62ed4e6e
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      spriteId: a1e7d14124d724a748dadd5a1a00d075
     linkedCells: []
     parentIndex: -1
   platformSettings:
