@@ -12,20 +12,18 @@ public class PlayerPreSnapState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ENTER DO PRE SNAP STATE");
+        anim.SetBool("IsPreSnap", true);
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
-        Debug.Log("UPDATE DO PRE SNAP STATE");
     }
 
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("EXIT DO PRE SNAP STATE");
         anim.SetBool("IsPreSnap", false);
     }
 }

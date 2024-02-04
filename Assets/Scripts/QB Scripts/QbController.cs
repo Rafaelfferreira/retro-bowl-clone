@@ -46,7 +46,7 @@ public class QbController : MonoBehaviour
     private void OnMovementCancelled(InputAction.CallbackContext value)
     {
         movementVector = Vector2.zero;
-        stateMachine.ChangeState(stateMachine.preSnapState);
+        stateMachine.ChangeState(stateMachine.idleState);
     }
 
     // MARK: - INPUT ACTION LIFE CYCLE
