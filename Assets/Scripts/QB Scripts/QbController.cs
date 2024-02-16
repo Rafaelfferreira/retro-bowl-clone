@@ -14,6 +14,7 @@ public class QbController : MonoBehaviour
     // MARK: - Movement properties
     [SerializeField] private float moveSpeed;
     private Vector2 movementVector = Vector2.zero;
+    private bool isAiming = false;
 
     // MARK: - OBJECT LIFECYCLE
     private void Awake()
@@ -46,6 +47,18 @@ public class QbController : MonoBehaviour
     private void OnMovementCancelled(InputAction.CallbackContext value)
     {
         movementVector = Vector2.zero;
+        stateMachine.ChangeState(isAiming ? stateMachine.aimingState : stateMachine.idleState);
+    }
+
+    private void OnAimPerformed(InputAction.CallbackContext value)
+    {
+        isAiming = true;
+        if (movementVector == Vector2.zero)
+            stateMachine.ChangeState(stateMachine.aimingState);
+    }
+    private void OnAimCancelled(InputAction.CallbackContext value)
+    {
+        isAiming = false;
         stateMachine.ChangeState(stateMachine.idleState);
     }
 
@@ -56,6 +69,9 @@ public class QbController : MonoBehaviour
         playerInput.Enable();
         playerInput.QB.Movement.performed += OnMovementPerformed;
         playerInput.QB.Movement.canceled += OnMovementCancelled;
+        playerInput.QB.Aim.performed += OnAimPerformed;
+        playerInput.QB.Aim.canceled += OnAimCancelled;
+
     }
 
     private void OnDisable()
@@ -63,6 +79,8 @@ public class QbController : MonoBehaviour
         playerInput.Disable();
         playerInput.QB.Movement.performed -= OnMovementPerformed;
         playerInput.QB.Movement.canceled -= OnMovementCancelled;
+        playerInput.QB.Aim.performed -= OnAimPerformed;
+        playerInput.QB.Aim.canceled -= OnAimCancelled;
     }
     #endregion
 }
