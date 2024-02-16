@@ -10,19 +10,31 @@ public class QbController : MonoBehaviour
     private Animator anim;
     private PlayerInput playerInput;
     private QBStateMachine stateMachine;
+    private AimingSkillController aimingController;
 
     // MARK: - Movement properties
     [SerializeField] private float moveSpeed;
     private Vector2 movementVector = Vector2.zero;
-    private bool isAiming = false;
 
-    // MARK: - OBJECT LIFECYCLE
+    private bool _isAiming = false;
+    private bool isAiming {
+        get => _isAiming;
+        set
+        {
+            aimingController.SetDotsActive(value);
+            _isAiming = value;
+        }
+    }
+
+
+    // MARK: - Object Lifecycle
     private void Awake()
     {
         playerInput = new PlayerInput();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         stateMachine = new QBStateMachine(anim);
+        aimingController = GetComponentInChildren<AimingSkillController>();
     }
 
     // Start is called before the first frame update
@@ -38,6 +50,10 @@ public class QbController : MonoBehaviour
         stateMachine.currentState.Update();
     }
 
+    // MARK: - Aiming
+
+    // MARK: - Input mapping
+    #region
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
         movementVector = value.ReadValue<Vector2>();
@@ -61,8 +77,10 @@ public class QbController : MonoBehaviour
         isAiming = false;
         stateMachine.ChangeState(stateMachine.idleState);
     }
+    #endregion
 
-    // MARK: - INPUT ACTION LIFE CYCLE
+
+    // MARK: - Input Action Life Cycle
     #region
     private void OnEnable()
     {
