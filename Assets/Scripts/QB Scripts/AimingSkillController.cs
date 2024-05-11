@@ -8,11 +8,11 @@ public class AimingSkillController : MonoBehaviour
     [Header("Aiming properties")]
     [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweenDots;
-    [SerializeField] private GameObject dotsPrefab;
+    [SerializeField] private  GameObject dotsPrefab;
     [SerializeField] private Transform dotsParentTransform;
 
     [Header("Aiming parameters")]
-    [SerializeField] private Vector2 launchDirection; // Should change based on strenght attributes of player
+    [SerializeField] private int playerStrenght;
     [SerializeField] private float ballGravity; // based on altitude of stadium?
 
     private GameObject[] dots;
@@ -53,10 +53,11 @@ public class AimingSkillController : MonoBehaviour
 
     private Vector2 CalculateDotsPosition(float t)
     {
-        Vector2 normalizedAimDirection = AimDirection().normalized;
+        Vector2 aimDirection = AimDirection();
+        Vector2 normalizedAimDirection = aimDirection.normalized;
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            normalizedAimDirection.x * -launchDirection.x,
-            normalizedAimDirection.y * -launchDirection.y
+            ((normalizedAimDirection.x * -aimDirection.x) + playerStrenght),
+            ((normalizedAimDirection.y * -aimDirection.y) + playerStrenght)
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;

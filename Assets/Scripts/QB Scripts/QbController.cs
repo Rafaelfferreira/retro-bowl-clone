@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class QbController : MonoBehaviour
+public class QbController : PlayerController
 {
     // MARK: - Stored game assets
-    private Rigidbody2D rb;
-    private Animator anim;
-    private PlayerInput playerInput;
     private QBStateMachine stateMachine;
     private AimingSkillController aimingController;
+    private PlayerInput playerInput;
 
     // MARK: - Movement properties
     [SerializeField] private float moveSpeed;
@@ -31,8 +29,6 @@ public class QbController : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
         stateMachine = new QBStateMachine(anim);
         aimingController = GetComponentInChildren<AimingSkillController>();
     }
@@ -69,6 +65,8 @@ public class QbController : MonoBehaviour
     private void OnAimPerformed(InputAction.CallbackContext value)
     {
         isAiming = true;
+
+        // TODO: - Update this to a third state called AimingWhileMoving or something similar
         if (movementVector == Vector2.zero)
             stateMachine.ChangeState(stateMachine.aimingState);
     }
