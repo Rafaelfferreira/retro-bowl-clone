@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QBAimingState : PlayerState
+public class QBAimingState : QbState
 {
     public QBAimingState(Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
     {
