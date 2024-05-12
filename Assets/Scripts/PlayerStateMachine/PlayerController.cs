@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     // MARK: - Stored game assets
     public Rigidbody2D rb;
     public Animator anim;
+    public bool isFacingLeft = true;
 
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
+    // MARK: - Life Cycle Methods
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +26,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // MARK: - Generic functions
+    public void Flip() {
+        rb.transform.Rotate(0, 180, 0);
+        isFacingLeft = !isFacingLeft;
     }
 }

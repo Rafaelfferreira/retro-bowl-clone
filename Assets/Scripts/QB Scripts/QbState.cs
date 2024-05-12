@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class QbState : PlayerState
 {
-    public QbState(Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
+    protected QbController qb;
+    public QbState(QbController _qb, Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
     {
+        qb = _qb;
         anim = _anim;
         animBoolName = _animBoolName;
     }

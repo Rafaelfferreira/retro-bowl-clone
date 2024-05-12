@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QBIdleState : QbState
 {
-    public QBIdleState(Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
+    public QBIdleState(QbController _qb, Animator _anim, string _animBoolName) : base(_qb,_anim, _animBoolName)
     {
     }
 

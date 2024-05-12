@@ -29,7 +29,7 @@ public class QbController : PlayerController
     private void Awake()
     {
         playerInput = new PlayerInput();
-        stateMachine = new QBStateMachine(anim);
+        stateMachine = new QBStateMachine(this, anim);
         aimingController = GetComponentInChildren<AimingSkillController>();
     }
 
@@ -47,7 +47,6 @@ public class QbController : PlayerController
     }
 
     // MARK: - Aiming
-
     // MARK: - Input mapping
     #region
     private void OnMovementPerformed(InputAction.CallbackContext value)

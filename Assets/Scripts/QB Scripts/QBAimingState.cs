@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QBAimingState : QbState
 {
-    public QBAimingState(Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
+    public QBAimingState(QbController _qb, Animator _anim, string _animBoolName) : base(_qb,_anim, _animBoolName)
     {
     }
 
@@ -23,5 +23,16 @@ public class QBAimingState : QbState
     public override void Update()
     {
         base.Update();
+        // TODO: - Here we need to get the aiming direction (the mouse position at least) and update is facingRight
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 playerPosition = qb.rb.position;
+        Vector2 facingDirection = mousePosition - playerPosition;
+
+        if (qb.isFacingLeft && facingDirection.x < 0) {
+            qb.Flip();
+        } else if (!qb.isFacingLeft && facingDirection.x > 0)
+        {
+            qb.Flip();
+        }
     }
 }

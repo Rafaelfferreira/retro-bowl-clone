@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QBStateMachine : StateMachine
 {
+    protected QbController qb;
     // MARK: - States
     #region States
     public PlayerPreSnapState preSnapState { get; private set; }
@@ -12,12 +13,13 @@ public class QBStateMachine : StateMachine
     public QBIdleState idleState { get; private set; }
     #endregion
 
-    public QBStateMachine(Animator anim) : base(anim)
+    public QBStateMachine(QbController _qb, Animator anim) : base(anim)
     {
+        qb = _qb;
         preSnapState = new PlayerPreSnapState(anim, "IsPreSnap");
-        dropBackState = new QBDropBackState(anim, "IsDroppingBack");
-        aimingState = new QBAimingState(anim, "IsAiming");
-        idleState = new QBIdleState(anim, "IsIdle");
+        dropBackState = new QBDropBackState(qb, anim, "IsDroppingBack");
+        aimingState = new QBAimingState(qb, anim, "IsAiming");
+        idleState = new QBIdleState(qb, anim, "IsIdle");
 
         base.Awake();
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QBDropBackState : QbState
 {
-    public QBDropBackState(Animator _anim, string _animBoolName) : base(_anim, _animBoolName)
+    public QBDropBackState(QbController _qb, Animator _anim, string _animBoolName) : base(_qb,_anim, _animBoolName)
     {
     }
 
