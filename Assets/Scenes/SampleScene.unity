@@ -263,8 +263,8 @@ MonoBehaviour:
   spaceBetweenDots: 0.05
   dotsPrefab: {fileID: 8285584304316383237, guid: 3d67573ab59cd4a049b33a13c2a31724, type: 3}
   dotsParentTransform: {fileID: 776151689}
-  launchDirection: {x: 25, y: 25}
-  ballGravity: 0
+  playerStrenght: 5
+  ballGravity: 5
 --- !u!1 &1553327349
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2708025bc29f4bb7a17aaa39e0c44ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 1553327353}
+  anim: {fileID: 1708927884}
+  isFacingLeft: 1
   moveSpeed: 5
 --- !u!4 &1553327352
 Transform:
