@@ -10,12 +10,18 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private float spaceBetweenDots;
     [SerializeField] private  GameObject dotsPrefab;
     [SerializeField] private Transform dotsParentTransform;
+    [SerializeField] private QbController qb;
 
     [Header("Aiming parameters")]
     [SerializeField] private int playerStrenght;
     [SerializeField] private float ballGravity; // based on altitude of stadium?
 
     private GameObject[] dots;
+
+    void Awake()
+    {
+        qb = GetComponentInParent<QbController>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +61,12 @@ public class AimingSkillController : MonoBehaviour
     {
         Vector2 aimDirection = AimDirection();
         Vector2 normalizedAimDirection = aimDirection.normalized;
+        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
+        float verticalMultiplier = normalizedAimDirection.y > 0 ? 1 : -1;
+
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            ((normalizedAimDirection.x * -aimDirection.x) + playerStrenght),
-            ((normalizedAimDirection.y * -aimDirection.y) + playerStrenght)
+            ((normalizedAimDirection.x * aimDirection.x * facingDirectionMultiplier)),
+            ((normalizedAimDirection.y * aimDirection.y * verticalMultiplier))
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;

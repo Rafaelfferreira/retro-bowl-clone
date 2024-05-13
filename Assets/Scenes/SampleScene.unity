@@ -263,6 +263,7 @@ MonoBehaviour:
   spaceBetweenDots: 0.05
   dotsPrefab: {fileID: 8285584304316383237, guid: 3d67573ab59cd4a049b33a13c2a31724, type: 3}
   dotsParentTransform: {fileID: 776151689}
+  qb: {fileID: 0}
   playerStrenght: 5
   ballGravity: 5
 --- !u!1 &1553327349
