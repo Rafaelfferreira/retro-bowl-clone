@@ -62,9 +62,11 @@ public class AimingSkillController : MonoBehaviour
     private Vector2 CalculateDotsPosition(float t)
     {
         Vector2 aimDirection = AimDirection();
+        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
+
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            (aimDirection.x),
-            (aimDirection.y)
+            ((aimDirection.x + (3 * facingDirectionMultiplier)) * playerStrenght),
+            ((aimDirection.y + 2) * playerStrenght)
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;
