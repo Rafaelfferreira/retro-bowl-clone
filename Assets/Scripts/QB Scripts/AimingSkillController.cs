@@ -61,12 +61,13 @@ public class AimingSkillController : MonoBehaviour
     {
         Vector2 aimDirection = AimDirection();
         Vector2 normalizedAimDirection = aimDirection.normalized;
-        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
-        float verticalMultiplier = normalizedAimDirection.y > 0 ? 1 : -1;
+        Vector2 absoluteAimDirection = new Vector2(Mathf.Abs(aimDirection.x), Mathf.Abs(aimDirection.y));
+        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1; // A multiplier that makes the character turn to the right direction based on the mouse position
+        float verticalMultiplier = normalizedAimDirection.y > 0 ? -1 : 1; // A multiplier that makes the throw arc point the right direction based on the mouse position
 
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            ((normalizedAimDirection.x * aimDirection.x * facingDirectionMultiplier)),
-            ((normalizedAimDirection.y * aimDirection.y * verticalMultiplier))
+            (absoluteAimDirection.x * facingDirectionMultiplier),
+            (absoluteAimDirection.y * verticalMultiplier)
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;
