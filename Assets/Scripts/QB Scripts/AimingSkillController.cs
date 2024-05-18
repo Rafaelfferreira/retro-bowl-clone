@@ -17,6 +17,7 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private int playerStrenght;
     [SerializeField] private float ballGravity; // based on altitude of stadium?
     public Vector2 mouseInitialPosition;
+    private float strenghtModifier;
 
     // MARK: - Stored properties
     private GameObject[] dots;
@@ -25,6 +26,7 @@ public class AimingSkillController : MonoBehaviour
     void Awake()
     {
         qb = GetComponentInParent<QbController>();
+        strenghtModifier = playerStrenght / 3;
     }
 
     // Start is called before the first frame update
@@ -63,10 +65,15 @@ public class AimingSkillController : MonoBehaviour
     {
         Vector2 aimDirection = AimDirection();
         float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
-
+        
+        // TODO: - We might still want to tweak this around a little bit, to make sure it makes sense with attributes between 1-10 which is the initial goal
+        // The 3 components of the posistion are:
+        // 1. The aim direction vector
+        // 2. A constant modifier
+        // 3. A strenght modifier based on the player's strenght
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            ((aimDirection.x + (3 * facingDirectionMultiplier)) * playerStrenght),
-            ((aimDirection.y + 2) * playerStrenght)
+            ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
+            ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;

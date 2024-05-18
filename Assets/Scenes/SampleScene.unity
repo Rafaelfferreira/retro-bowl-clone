@@ -259,13 +259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80d7c9be11b54659a3cce53134965ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfDots: 15
+  numberOfDots: 9
   spaceBetweenDots: 0.05
   dotsPrefab: {fileID: 8285584304316383237, guid: 3d67573ab59cd4a049b33a13c2a31724, type: 3}
   dotsParentTransform: {fileID: 776151689}
   qb: {fileID: 0}
   playerStrenght: 5
   ballGravity: 5
+  mouseInitialPosition: {x: 0, y: 0}
 --- !u!1 &1553327349
 GameObject:
   m_ObjectHideFlags: 0
