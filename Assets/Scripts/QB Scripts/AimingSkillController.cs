@@ -11,13 +11,17 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private  GameObject dotsPrefab;
     [SerializeField] private Transform dotsParentTransform;
     [SerializeField] private QbController qb;
-
+    
+    // MARK: - Aiming parameters
     [Header("Aiming parameters")]
     [SerializeField] private int playerStrenght;
     [SerializeField] private float ballGravity; // based on altitude of stadium?
+    public Vector2 mouseInitialPosition;
 
+    // MARK: - Stored properties
     private GameObject[] dots;
 
+    // MARK: - Life cycle methods
     void Awake()
     {
         qb = GetComponentInParent<QbController>();
@@ -51,23 +55,16 @@ public class AimingSkillController : MonoBehaviour
 
     public Vector2 AimDirection()
     {
-        Vector2 playerPosition = dotsParentTransform.position;
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        return mousePosition - playerPosition; // a vector connecting the mouse to the player
+        Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return mouseInitialPosition - mouseCurrentPosition; // a vector connecting the mouse to the player
     }
 
     private Vector2 CalculateDotsPosition(float t)
     {
         Vector2 aimDirection = AimDirection();
-        Vector2 normalizedAimDirection = aimDirection.normalized;
-        Vector2 absoluteAimDirection = new Vector2(Mathf.Abs(aimDirection.x), Mathf.Abs(aimDirection.y));
-        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1; // A multiplier that makes the character turn to the right direction based on the mouse position
-        float verticalMultiplier = normalizedAimDirection.y > 0 ? -1 : 1; // A multiplier that makes the throw arc point the right direction based on the mouse position
-
         Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
-            (absoluteAimDirection.x * facingDirectionMultiplier),
-            (absoluteAimDirection.y * verticalMultiplier)
+            (aimDirection.x),
+            (aimDirection.y)
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
 
         return position;

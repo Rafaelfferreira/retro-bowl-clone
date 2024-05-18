@@ -64,10 +64,14 @@ public class QbController : PlayerController
     private void OnAimPerformed(InputAction.CallbackContext value)
     {
         isAiming = true;
+        Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // TODO: - Update this to a third state called AimingWhileMoving or something similar
-        if (movementVector == Vector2.zero)
+        if (movementVector == Vector2.zero) {
+            aimingController.mouseInitialPosition = clickPosition;
             stateMachine.ChangeState(stateMachine.aimingState);
+        }
+            
     }
     private void OnAimCancelled(InputAction.CallbackContext value)
     {
