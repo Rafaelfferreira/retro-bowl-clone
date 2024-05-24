@@ -8,9 +8,10 @@ public class AimingSkillController : MonoBehaviour
     [Header("Aiming properties")]
     [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweenDots;
-    [SerializeField] private  GameObject dotsPrefab;
-    [SerializeField] private Transform dotsParentTransform;
-    [SerializeField] private QbController qb;
+    [SerializeField] private GameObject dotsPrefab;
+    [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private Transform ThrowParentTransform;
+    private QbController qb;
     
     // MARK: - Aiming parameters
     [Header("Aiming parameters")]
@@ -44,13 +45,14 @@ public class AimingSkillController : MonoBehaviour
         }
     }
 
+    // MARK: - Dots
     // Generate the dots based on the aiming properties parameters; does not activate dots
     private void GenerateDots()
     {
         dots = new GameObject[numberOfDots];
         for (int i = 0; i < numberOfDots; i++)
         {
-            dots[i] = Instantiate(dotsPrefab, dotsParentTransform.position, Quaternion.identity, dotsParentTransform); // TODO: - Do we need this last parameter?
+            dots[i] = Instantiate(dotsPrefab, ThrowParentTransform.position, Quaternion.identity, ThrowParentTransform); // TODO: - Do we need this last parameter?
             dots[i].SetActive(false);
         }
     }
@@ -71,7 +73,7 @@ public class AimingSkillController : MonoBehaviour
         // 1. The aim direction vector
         // 2. A constant modifier
         // 3. A strenght modifier based on the player's strenght
-        Vector2 position = (Vector2)dotsParentTransform.position + new Vector2(
+        Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
             ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
             ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
         ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
@@ -85,5 +87,20 @@ public class AimingSkillController : MonoBehaviour
         {
             dots[i].SetActive(_isActive);
         }
+    }
+
+    // MARK: - Ball
+    public void CreateBall() {
+        GameObject ball = Instantiate(ballPrefab, ThrowParentTransform.position, Quaternion.identity);
+        BallController ballController = ball.GetComponent<BallController>();
+        
+        Vector2 aimDirection = AimDirection();
+        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
+        Vector2 position = new Vector2(
+            ((aimDirection.x + (5 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
+            ((aimDirection.y + 5 + (aimDirection.y * strenghtModifier)))
+        );
+
+        ballController.SetupBall(position);
     }
 }

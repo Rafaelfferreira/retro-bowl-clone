@@ -77,6 +77,7 @@ public class QbController : PlayerController
     {
         isAiming = false;
         stateMachine.ChangeState(stateMachine.idleState);
+        aimingController.CreateBall();
     }
     #endregion
 
