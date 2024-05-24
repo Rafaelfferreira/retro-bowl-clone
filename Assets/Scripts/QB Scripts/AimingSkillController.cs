@@ -11,6 +11,9 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private GameObject dotsPrefab;
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private Transform ThrowParentTransform;
+
+    [Header("Debugging")]
+    [SerializeField] private float DEBUG_ANGLE;
     private QbController qb;
     
     // MARK: - Aiming parameters
@@ -60,6 +63,7 @@ public class AimingSkillController : MonoBehaviour
     public Vector2 AimDirection()
     {
         Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        DEBUG_ANGLE = 1 * Vector2.SignedAngle(mouseInitialPosition, mouseCurrentPosition) + 20;
         return mouseInitialPosition - mouseCurrentPosition; // a vector connecting the mouse to the player
     }
 
@@ -73,10 +77,16 @@ public class AimingSkillController : MonoBehaviour
         // 1. The aim direction vector
         // 2. A constant modifier
         // 3. A strenght modifier based on the player's strenght
+        // Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
+        //     ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
+        //     ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
+        // ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
+        float radianAngle = Mathf.Deg2Rad * DEBUG_ANGLE;
+
         Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
-            ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
-            ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
-        ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
+            playerStrenght * t * Mathf.Cos(radianAngle),
+            playerStrenght * t * Mathf.Sin(radianAngle) - (ballGravity * t * t)/2
+        );
 
         return position;
     }
@@ -96,9 +106,12 @@ public class AimingSkillController : MonoBehaviour
         
         Vector2 aimDirection = AimDirection();
         float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
+
+        float radianAngle = Mathf.Deg2Rad * DEBUG_ANGLE;
+
         Vector2 position = new Vector2(
-            ((aimDirection.x + (5 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
-            ((aimDirection.y + 5 + (aimDirection.y * strenghtModifier)))
+            playerStrenght * Mathf.Cos(radianAngle),
+            playerStrenght * Mathf.Sin(radianAngle)
         );
 
         ballController.SetupBall(position);
