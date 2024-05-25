@@ -5,16 +5,17 @@ using UnityEngine;
 public class AimingSkillController : MonoBehaviour
 {
     // MARK: - Aiming properties
+    #region Aiming properties
     [Header("Aiming properties")]
     [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweenDots;
     [SerializeField] private GameObject dotsPrefab;
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private Transform ThrowParentTransform;
+    #endregion
 
     [Header("Debugging")]
-    [SerializeField] private float DEBUG_ANGLE;
-    private QbController qb;
+    [SerializeField] private float throwAngle;
     
     // MARK: - Aiming parameters
     [Header("Aiming parameters")]
@@ -24,6 +25,7 @@ public class AimingSkillController : MonoBehaviour
     private float strenghtModifier;
 
     // MARK: - Stored properties
+    private QbController qb;
     private GameObject[] dots;
 
     // MARK: - Life cycle methods
@@ -63,8 +65,27 @@ public class AimingSkillController : MonoBehaviour
     public Vector2 AimDirection()
     {
         Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        DEBUG_ANGLE = 1 * Vector2.SignedAngle(mouseInitialPosition, mouseCurrentPosition) + 20;
+
+        // TODO: - REMOVE DEBUG CODE
+        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
+
+        Vector2 baseThrowVector = new Vector2(1 * facingDirectionMultiplier,0).normalized; // A normalized horizontal vector that faces the direction the player is facing; used to calculate throw angle
+        Vector2 mousePositionDiffVector = mouseInitialPosition - mouseCurrentPosition; // The vector indicating the difference between the initial mouse position and the current mouse position
+        Vector2 normalizedThrowDirection = (baseThrowVector + mousePositionDiffVector).normalized; // The normalized vector indicating the direction the player is aiming at; Used to calculate throw angle
+
+        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection);
+        if (throwAngle > 90) {
+            qb.Flip();
+        }
+
+        // Debug.DrawLine(Vector2.zero, -mouseInitialPosition, Color.magenta);
+        // Debug.DrawLine(Vector2.zero, -mouseCurrentPosition, Color.cyan);
+        Debug.DrawLine(Vector2.zero, baseThrowVector, Color.yellow);
+        Debug.DrawLine(Vector2.zero, normalizedThrowDirection, Color.green);
+        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection);
         return mouseInitialPosition - mouseCurrentPosition; // a vector connecting the mouse to the player
+
+        
     }
 
     private Vector2 CalculateDotsPosition(float t)
@@ -81,10 +102,10 @@ public class AimingSkillController : MonoBehaviour
         //     ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
         //     ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
         // ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
-        float radianAngle = Mathf.Deg2Rad * DEBUG_ANGLE;
-
+        float radianAngle = Mathf.Deg2Rad * throwAngle;
+        // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
-            playerStrenght * t * Mathf.Cos(radianAngle),
+            playerStrenght * facingDirectionMultiplier * t * Mathf.Cos(radianAngle),
             playerStrenght * t * Mathf.Sin(radianAngle) - (ballGravity * t * t)/2
         );
 
@@ -107,8 +128,8 @@ public class AimingSkillController : MonoBehaviour
         Vector2 aimDirection = AimDirection();
         float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
 
-        float radianAngle = Mathf.Deg2Rad * DEBUG_ANGLE;
-
+        float radianAngle = Mathf.Deg2Rad * throwAngle;
+        // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 position = new Vector2(
             playerStrenght * Mathf.Cos(radianAngle),
             playerStrenght * Mathf.Sin(radianAngle)

@@ -12,17 +12,7 @@ public class QBAimingState : QbState
     {
         base.Enter();
         anim.SetBool(animBoolName, true);
-    }
 
-    public override void Exit()
-    {
-        base.Exit();
-        anim.SetBool(animBoolName, false);
-    }
-
-    public override void Update()
-    {
-        base.Update();
         // TODO: - Here we need to get the aiming direction (the mouse position at least) and update is facingRight
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPosition = qb.rb.position;
@@ -34,5 +24,16 @@ public class QBAimingState : QbState
         {
             qb.Flip();
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        anim.SetBool(animBoolName, false);
+    }
+
+    public override void Update()
+    {
+        base.Update();
     }
 }
