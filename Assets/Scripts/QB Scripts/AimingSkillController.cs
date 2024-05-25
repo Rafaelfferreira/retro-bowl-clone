@@ -27,6 +27,12 @@ public class AimingSkillController : MonoBehaviour
     // MARK: - Stored properties
     private QbController qb;
     private GameObject[] dots;
+    private int facingDirectionMultiplier {
+        get 
+        {
+            return qb.isFacingLeft ? -1 : 1;
+        }
+    }
 
     // MARK: - Life cycle methods
     void Awake()
@@ -66,10 +72,6 @@ public class AimingSkillController : MonoBehaviour
     public void UpdateThrowAngle()
     {
         Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        // TODO: - REMOVE DEBUG CODE
-        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
-
         Vector2 baseThrowVector = new Vector2(1 * facingDirectionMultiplier,0).normalized; // A normalized horizontal vector that faces the direction the player is facing; used to calculate throw angle
         Vector2 mousePositionDiffVector = mouseInitialPosition - mouseCurrentPosition; // The vector indicating the difference between the initial mouse position and the current mouse position
         Vector2 normalizedThrowDirection = (baseThrowVector + mousePositionDiffVector).normalized; // The normalized vector indicating the direction the player is aiming at; Used to calculate throw angle
@@ -78,8 +80,8 @@ public class AimingSkillController : MonoBehaviour
         if (throwAngle > 90) {
             qb.Flip();
         }
-        // Debug.DrawLine(Vector2.zero, -mouseInitialPosition, Color.magenta);
-        // Debug.DrawLine(Vector2.zero, -mouseCurrentPosition, Color.cyan);
+
+        // FIXME: Remove debug code
         Debug.DrawLine(Vector2.zero, baseThrowVector, Color.yellow);
         Debug.DrawLine(Vector2.zero, normalizedThrowDirection, Color.green);
         throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection) * (mousePositionDiffVector.y > 0 ? 1 : -1);
@@ -88,7 +90,6 @@ public class AimingSkillController : MonoBehaviour
     private Vector2 CalculateDotsPosition(float t)
     {
         UpdateThrowAngle();
-        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
         
         float radianAngle = Mathf.Deg2Rad * throwAngle;
         // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
@@ -117,7 +118,7 @@ public class AimingSkillController : MonoBehaviour
         float radianAngle = Mathf.Deg2Rad * throwAngle;
         // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 ballVelocity = new Vector2(
-            playerStrenght * Mathf.Cos(radianAngle),
+            playerStrenght * Mathf.Cos(radianAngle) * facingDirectionMultiplier,
             playerStrenght * Mathf.Sin(radianAngle)
         );
 
