@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AimingSkillController : MonoBehaviour
@@ -16,6 +17,7 @@ public class AimingSkillController : MonoBehaviour
 
     [Header("Debugging")]
     [SerializeField] private float throwAngle;
+    [SerializeField] private float passStrenghtModifier;
     
     // MARK: - Aiming parameters
     [Header("Aiming parameters")]
@@ -23,6 +25,7 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private float ballGravity; // based on altitude of stadium?
     public Vector2 mouseInitialPosition;
     private float strenghtModifier;
+    private int initialThrowingForceAdjustmentConstat = 5; 
 
     // MARK: - Stored properties
     private QbController qb;
@@ -68,14 +71,16 @@ public class AimingSkillController : MonoBehaviour
         }
     }
 
-    // FIXME: - Fazer com que o angulo seja retornado aqui? Ou sera melhor manter como uma variavel
     public void UpdateThrowAngle()
     {
         Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 baseThrowVector = new Vector2(1 * facingDirectionMultiplier,0).normalized; // A normalized horizontal vector that faces the direction the player is facing; used to calculate throw angle
         Vector2 mousePositionDiffVector = mouseInitialPosition - mouseCurrentPosition; // The vector indicating the difference between the initial mouse position and the current mouse position
         Vector2 normalizedThrowDirection = (baseThrowVector + mousePositionDiffVector).normalized; // The normalized vector indicating the direction the player is aiming at; Used to calculate throw angle
-        int initialThrowAngleAdjustmentConstant = 15;
+        
+        int initialThrowAngleAdjustmentConstant = 15;        
+
+        passStrenghtModifier = Mathf.Abs(mousePositionDiffVector.x * playerStrenght / 3);
 
         // FIXME: Remove debug code
         Debug.DrawLine(Vector2.zero, baseThrowVector, Color.yellow);
@@ -90,12 +95,11 @@ public class AimingSkillController : MonoBehaviour
     private Vector2 CalculateDotsPosition(float t)
     {
         UpdateThrowAngle();
-        
+
         float radianAngle = Mathf.Deg2Rad * throwAngle;
-        // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
-            playerStrenght * facingDirectionMultiplier * t * Mathf.Cos(radianAngle),
-            playerStrenght * t * Mathf.Sin(radianAngle) - ((ballGravity * t * t)/2)
+            (initialThrowingForceAdjustmentConstat + passStrenghtModifier) * facingDirectionMultiplier * t * Mathf.Cos(radianAngle),
+            (initialThrowingForceAdjustmentConstat + passStrenghtModifier) * t * Mathf.Sin(radianAngle) - (ballGravity * t * t/2)
         );
 
         return position;
@@ -105,8 +109,7 @@ public class AimingSkillController : MonoBehaviour
     {
         for (int i = 0; i < dots.Length; i++)
         {
-            // dots[i].SetActive(_isActive);
-            dots[i].SetActive(true); // FIXME: - REMOVE THIS AND UNCOMMENT LINE ABOVE
+            dots[i].SetActive(_isActive);
         }
     }
 
@@ -116,10 +119,9 @@ public class AimingSkillController : MonoBehaviour
         BallController ballController = ball.GetComponent<BallController>();
 
         float radianAngle = Mathf.Deg2Rad * throwAngle;
-        // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 ballVelocity = new Vector2(
-            playerStrenght * Mathf.Cos(radianAngle) * facingDirectionMultiplier,
-            playerStrenght * Mathf.Sin(radianAngle)
+            (initialThrowingForceAdjustmentConstat + 2 + passStrenghtModifier) * Mathf.Cos(radianAngle) * facingDirectionMultiplier,
+            (initialThrowingForceAdjustmentConstat + 2 + passStrenghtModifier) * Mathf.Sin(radianAngle)
         );
 
         ballController.SetupBall(ballVelocity);

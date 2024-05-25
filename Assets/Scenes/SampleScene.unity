@@ -260,11 +260,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfDots: 9
-  spaceBetweenDots: 0.05
+  spaceBetweenDots: 0.1
   dotsPrefab: {fileID: 8285584304316383237, guid: 3d67573ab59cd4a049b33a13c2a31724, type: 3}
   ballPrefab: {fileID: 4210315942064947332, guid: f3c0931eb0dc64da1af05ec7294f56db, type: 3}
   ThrowParentTransform: {fileID: 1553327352}
   throwAngle: 0
+  passStrenghtModifier: 0
   playerStrenght: 5
   ballGravity: 5
   mouseInitialPosition: {x: 0, y: 0}
