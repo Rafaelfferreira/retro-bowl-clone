@@ -75,16 +75,16 @@ public class AimingSkillController : MonoBehaviour
         Vector2 baseThrowVector = new Vector2(1 * facingDirectionMultiplier,0).normalized; // A normalized horizontal vector that faces the direction the player is facing; used to calculate throw angle
         Vector2 mousePositionDiffVector = mouseInitialPosition - mouseCurrentPosition; // The vector indicating the difference between the initial mouse position and the current mouse position
         Vector2 normalizedThrowDirection = (baseThrowVector + mousePositionDiffVector).normalized; // The normalized vector indicating the direction the player is aiming at; Used to calculate throw angle
-
-        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection);
-        if (throwAngle > 90) {
-            qb.Flip();
-        }
+        int initialThrowAngleAdjustmentConstant = 15;
 
         // FIXME: Remove debug code
         Debug.DrawLine(Vector2.zero, baseThrowVector, Color.yellow);
         Debug.DrawLine(Vector2.zero, normalizedThrowDirection, Color.green);
-        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection) * (mousePositionDiffVector.y > 0 ? 1 : -1);
+        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection) * (mousePositionDiffVector.y > 0 ? 1 : -1) + initialThrowAngleAdjustmentConstant;
+
+        if (throwAngle > 90 + initialThrowAngleAdjustmentConstant) {
+            qb.Flip();
+        }
     }
 
     private Vector2 CalculateDotsPosition(float t)
