@@ -62,7 +62,8 @@ public class AimingSkillController : MonoBehaviour
         }
     }
 
-    public Vector2 AimDirection()
+    // FIXME: - Fazer com que o angulo seja retornado aqui? Ou sera melhor manter como uma variavel
+    public void UpdateThrowAngle()
     {
         Vector2 mouseCurrentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -77,36 +78,23 @@ public class AimingSkillController : MonoBehaviour
         if (throwAngle > 90) {
             qb.Flip();
         }
-
         // Debug.DrawLine(Vector2.zero, -mouseInitialPosition, Color.magenta);
         // Debug.DrawLine(Vector2.zero, -mouseCurrentPosition, Color.cyan);
         Debug.DrawLine(Vector2.zero, baseThrowVector, Color.yellow);
         Debug.DrawLine(Vector2.zero, normalizedThrowDirection, Color.green);
-        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection);
-        return mouseInitialPosition - mouseCurrentPosition; // a vector connecting the mouse to the player
-
-        
+        throwAngle = Vector2.Angle(baseThrowVector, normalizedThrowDirection) * (mousePositionDiffVector.y > 0 ? 1 : -1);
     }
 
     private Vector2 CalculateDotsPosition(float t)
     {
-        Vector2 aimDirection = AimDirection();
+        UpdateThrowAngle();
         float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
         
-        // TODO: - We might still want to tweak this around a little bit, to make sure it makes sense with attributes between 1-10 which is the initial goal
-        // The 3 components of the posistion are:
-        // 1. The aim direction vector
-        // 2. A constant modifier
-        // 3. A strenght modifier based on the player's strenght
-        // Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
-        //     ((aimDirection.x + (15 * facingDirectionMultiplier) + (aimDirection.x * strenghtModifier))),
-        //     ((aimDirection.y + 10 + (aimDirection.y * strenghtModifier)))
-        // ) * t + .5f * (Physics2D.gravity * ballGravity) * (t * t);
         float radianAngle = Mathf.Deg2Rad * throwAngle;
         // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
         Vector2 position = (Vector2)ThrowParentTransform.position + new Vector2(
             playerStrenght * facingDirectionMultiplier * t * Mathf.Cos(radianAngle),
-            playerStrenght * t * Mathf.Sin(radianAngle) - (ballGravity * t * t)/2
+            playerStrenght * t * Mathf.Sin(radianAngle) - ((ballGravity * t * t)/2)
         );
 
         return position;
@@ -116,7 +104,8 @@ public class AimingSkillController : MonoBehaviour
     {
         for (int i = 0; i < dots.Length; i++)
         {
-            dots[i].SetActive(_isActive);
+            // dots[i].SetActive(_isActive);
+            dots[i].SetActive(true); // FIXME: - REMOVE THIS AND UNCOMMENT LINE ABOVE
         }
     }
 
@@ -124,17 +113,14 @@ public class AimingSkillController : MonoBehaviour
     public void CreateBall() {
         GameObject ball = Instantiate(ballPrefab, ThrowParentTransform.position, Quaternion.identity);
         BallController ballController = ball.GetComponent<BallController>();
-        
-        Vector2 aimDirection = AimDirection();
-        float facingDirectionMultiplier = qb.isFacingLeft ? -1 : 1;
 
         float radianAngle = Mathf.Deg2Rad * throwAngle;
         // FIXME: - AINDA FALTA INCORPORAR O MOUSE NESSA JOGADA AQUI
-        Vector2 position = new Vector2(
+        Vector2 ballVelocity = new Vector2(
             playerStrenght * Mathf.Cos(radianAngle),
             playerStrenght * Mathf.Sin(radianAngle)
         );
 
-        ballController.SetupBall(position);
+        ballController.SetupBall(ballVelocity);
     }
 }
