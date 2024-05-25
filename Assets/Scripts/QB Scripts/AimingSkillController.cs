@@ -24,7 +24,6 @@ public class AimingSkillController : MonoBehaviour
     [SerializeField] private int playerStrenght;
     [SerializeField] private float ballGravity; // based on altitude of stadium?
     public Vector2 mouseInitialPosition;
-    private float strenghtModifier;
     private int initialThrowingForceAdjustmentConstat = 5; 
 
     // MARK: - Stored properties
@@ -41,7 +40,6 @@ public class AimingSkillController : MonoBehaviour
     void Awake()
     {
         qb = GetComponentInParent<QbController>();
-        strenghtModifier = playerStrenght / 3;
     }
 
     // Start is called before the first frame update
