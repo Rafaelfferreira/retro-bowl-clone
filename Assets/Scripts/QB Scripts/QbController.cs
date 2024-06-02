@@ -24,6 +24,11 @@ public class QbController : PlayerController
         }
     }
 
+    // MARK: - Subscribers
+    private void GameManagerOnGameStateChanged(GameState newState) {
+        // FIXME: - Implement proper state handling here in the future
+        Debug.Log("NEW STATE: " + newState);
+    }
 
     // MARK: - Object Lifecycle
     private void Awake()
@@ -31,6 +36,7 @@ public class QbController : PlayerController
         playerInput = new PlayerInput();
         stateMachine = new QBStateMachine(this, anim);
         aimingController = GetComponentInChildren<AimingSkillController>();
+        GameManager.OnGameStateChanged += GameManagerOnGameStateChanged; // Subscribing to the GameManager event
     }
 
     // Start is called before the first frame update
@@ -46,7 +52,11 @@ public class QbController : PlayerController
         stateMachine.currentState.Update();
     }
 
-    // MARK: - Aiming
+    void OnDestroy()
+    {
+        GameManager.OnGameStateChanged -= GameManagerOnGameStateChanged;
+    }
+
     // MARK: - Input mapping
     #region
     private void OnMovementPerformed(InputAction.CallbackContext value)

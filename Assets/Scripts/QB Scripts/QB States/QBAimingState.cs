@@ -25,4 +25,11 @@ public class QBAimingState : QbState
             qb.Flip();
         }
     }
+
+    public override void Exit()
+    {
+        base.Exit();
+        GameManager.Instance.UpdateGameState(GameState.LiveBall);
+        // anim.SetBool(animBoolName, false);
+    }
 }

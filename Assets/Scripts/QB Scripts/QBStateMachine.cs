@@ -11,6 +11,7 @@ public class QBStateMachine : StateMachine
     public QBDropBackState dropBackState { get; private set; }
     public QBAimingState aimingState { get; private set; }
     public QBIdleState idleState { get; private set; }
+    public QbIdleWithoutBallState idleWithoutBallState { get; private set; }
     #endregion
 
     public QBStateMachine(QbController _qb, Animator anim) : base(anim)
@@ -20,6 +21,7 @@ public class QBStateMachine : StateMachine
         dropBackState = new QBDropBackState(qb, anim, "IsDroppingBack");
         aimingState = new QBAimingState(qb, anim, "IsAiming");
         idleState = new QBIdleState(qb, anim, "IsIdle");
+        idleWithoutBallState = new QbIdleWithoutBallState(anim, "IsIdle"); // FIXME: - Change the sprite for this state
 
         base.Awake();
     }
