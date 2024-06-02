@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class StateMachine
 {
-    public PlayerState currentState;
+    public StateMachineState currentState;
     public Animator anim;
 
-    public StateMachine(PlayerState currentState)
+    public StateMachine(StateMachineState currentState)
     {
         this.currentState = currentState;
     }
@@ -21,13 +21,13 @@ public class StateMachine
     {
     }
 
-    public void Initialize(PlayerState _initialState)
+    public void Initialize(StateMachineState _initialState)
     {
         currentState = _initialState;
         currentState.Enter();
     }
 
-    public void ChangeState(PlayerState _newState)
+    public void ChangeState(StateMachineState _newState)
     {
         currentState.Exit();
         currentState = _newState;

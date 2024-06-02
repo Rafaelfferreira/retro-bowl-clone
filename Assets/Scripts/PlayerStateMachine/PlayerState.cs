@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerState
+public class PlayerState: StateMachineState
 {
     protected Animator anim;
     protected string animBoolName;
@@ -12,21 +12,5 @@ public class PlayerState
     {
         anim = _anim;
         animBoolName = _animBoolName;
-    }
-
-    // MARK: - Life cycle methods
-    public virtual void Enter()
-    {
-        
-    }
-
-    public virtual void Update()
-    {
-        
-    }
-
-    public virtual void Exit()
-    {
-
     }
 }
