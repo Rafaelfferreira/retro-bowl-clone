@@ -25,15 +25,4 @@ public class QBAimingState : QbState
             qb.Flip();
         }
     }
-
-    public override void Exit()
-    {
-        base.Exit();
-        anim.SetBool(animBoolName, false);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-    }
 }

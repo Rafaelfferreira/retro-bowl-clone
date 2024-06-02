@@ -13,4 +13,23 @@ public class PlayerState: StateMachineState
         anim = _anim;
         animBoolName = _animBoolName;
     }
+
+    // MARK: - Life cycle methods
+    public override void Enter()
+    {
+        base.Enter();
+        anim.SetBool(animBoolName, true);
+    }
+
+    // Update is called once per frame
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        anim.SetBool(animBoolName, false);
+    }
 }
