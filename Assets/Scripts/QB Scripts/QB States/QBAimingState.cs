@@ -29,7 +29,5 @@ public class QBAimingState : QbState
     public override void Exit()
     {
         base.Exit();
-        GameManager.Instance.UpdateGameState(GameState.LiveBall);
-        // anim.SetBool(animBoolName, false);
     }
 }

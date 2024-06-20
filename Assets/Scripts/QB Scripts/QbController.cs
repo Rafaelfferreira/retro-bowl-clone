@@ -27,7 +27,6 @@ public class QbController : PlayerController
     // MARK: - Subscribers
     private void GameManagerOnGameStateChanged(GameState newState) {
         // FIXME: - Implement proper state handling here in the future
-        // Debug.Log("NEW STATE: " + newState);
     }
 
     // MARK: - Object Lifecycle
@@ -93,6 +92,7 @@ public class QbController : PlayerController
     {
         isAiming = false;
         stateMachine.ChangeState(stateMachine.idleState);
+        GameManager.Instance.UpdateGameState(GameState.LiveBall);
         aimingController.CreateBall();
     }
     #endregion
