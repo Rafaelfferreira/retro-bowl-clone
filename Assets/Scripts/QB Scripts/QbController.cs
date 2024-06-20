@@ -27,7 +27,7 @@ public class QbController : PlayerController
     // MARK: - Subscribers
     private void GameManagerOnGameStateChanged(GameState newState) {
         // FIXME: - Implement proper state handling here in the future
-        Debug.Log("NEW STATE: " + newState);
+        // Debug.Log("NEW STATE: " + newState);
     }
 
     // MARK: - Object Lifecycle
@@ -62,7 +62,12 @@ public class QbController : PlayerController
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
         movementVector = value.ReadValue<Vector2>();
-        stateMachine.ChangeState(stateMachine.dropBackState);
+
+        if (_isAiming) {
+            stateMachine.ChangeState(stateMachine.dropBackAimingState);    
+        } else {
+            stateMachine.ChangeState(stateMachine.dropBackState);
+        }   
     }
 
     private void OnMovementCancelled(InputAction.CallbackContext value)
@@ -76,10 +81,11 @@ public class QbController : PlayerController
         isAiming = true;
         Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // TODO: - Update this to a third state called AimingWhileMoving or something similar
         if (movementVector == Vector2.zero) {
             aimingController.mouseInitialPosition = clickPosition;
             stateMachine.ChangeState(stateMachine.aimingState);
+        } else {
+            stateMachine.ChangeState(stateMachine.dropBackAimingState);
         }
             
     }

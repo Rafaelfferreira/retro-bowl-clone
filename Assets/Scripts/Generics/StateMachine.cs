@@ -27,7 +27,7 @@ public class StateMachine
         currentState.Enter();
     }
 
-    public void ChangeState(StateMachineState _newState)
+    public virtual void ChangeState(StateMachineState _newState)
     {
         currentState.Exit();
         currentState = _newState;

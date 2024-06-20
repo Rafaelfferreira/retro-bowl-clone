@@ -6,6 +6,7 @@ using UnityEngine;
 public enum GameState
 {
     PreSnap,
+    QBWithBall,
     LiveBall,
     AfterPlay
 }
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance; // Making this a singleton
     public static Action<GameState> OnGameStateChanged;
     // MARK: - Stored game assets
-    private GameState currentState = GameState.PreSnap;
+    public GameState currentState = GameState.PreSnap;
 
     // MARK: - Life cycle methods
     void Awake()
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviour
 
     // MARK: - State machine methods
     public void UpdateGameState(GameState newState) {
+        if (currentState == newState) {
+            return;
+        }
+
         currentState = newState;
 
         // We can throw a switch with the new state here to handle any additional logic needed
